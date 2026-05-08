@@ -1,0 +1,58 @@
+========================================================================
+  RL Music Emotion Management — DEAP Experiment Report
+  Reference: Dutta et al., IEEE EMBC 2020
+========================================================================
+
+  Subjects evaluated      : 32
+  Converged (<10°)  : 15  (46.9%)
+  Did NOT converge        : 17  (53.1%)
+
+  Overall clip-6 error    : 42.3° ± 56.8°
+  Paper target            : ≈57° overall, ≈11.3° S-group, ≈123.7° F-group
+  S-group clip-6 error    : 0.8° ± 0.0°
+  F-group clip-6 error    : 78.9° ± 56.8°
+
+
+--- TABLE I ---
+         Clip 1-2           3           4           5           6
+Group                                                            
+T      51.5(43.0)  43.1(50.2)  35.2(41.1)  36.5(47.3)  42.3(56.8)
+S      38.0(33.7)    8.5(8.9)    3.6(6.2)   6.7(11.8)    0.8(0.0)
+F      63.3(46.6)  73.6(51.9)  63.0(38.6)  62.9(51.1)  78.9(56.8)
+
+
+--- PER-SUBJECT DETAIL ---
+ SID      Status   FinalErr  Emotion Path
+------------------------------------------------------------------------
+   1      FAILED      19.8°  anger → disgust → sadness → sadness → happy → happy → happy
+   2   CONVERGED       0.8°  anger → sadness → happy → happy → happy → happy → happy
+   3      FAILED      27.3°  anger → happy → pride → happy → pride → happy → pride
+   4      FAILED     179.2°  anger → interest → happy → pride → relief → guilt → sadness
+   5      FAILED      49.5°  anger → interest → interest → anger → happy → happy → interest
+   6   CONVERGED       0.8°  anger → interest → pride → happy → happy → happy → happy
+   7      FAILED      33.6°  anger → interest → pride → interest → pride → happy → pride
+   8   CONVERGED       0.8°  anger → happy → happy → happy → happy → happy → happy
+   9      FAILED     175.7°  anger → interest → sadness → guilt → disgust → disgust → sadness
+  10   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  11      FAILED     145.4°  anger → interest → relief → guilt → relief → relief → guilt
+  12      FAILED     146.3°  anger → pride → anger → relief → anger → relief → disgust
+  13      FAILED      41.6°  anger → interest → relief → pride → interest → pride → interest
+  14      FAILED     151.5°  anger → pride → anger → relief → disgust → relief → disgust
+  15   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  16   CONVERGED       0.8°  anger → happy → pride → happy → happy → pride → happy
+  17   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  18   CONVERGED       0.8°  anger → interest → interest → happy → happy → happy → happy
+  19   CONVERGED       0.8°  anger → interest → interest → happy → happy → happy → happy
+  20      FAILED      24.5°  anger → interest → happy → happy → pride → pride → pride
+  21   CONVERGED       0.8°  anger → interest → happy → happy → happy → interest → happy
+  22   CONVERGED       0.8°  anger → interest → happy → interest → happy → interest → happy
+  23   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  24      FAILED      27.3°  anger → interest → anger → relief → interest → anger → happy
+  25      FAILED      51.8°  anger → interest → happy → pride → interest → happy → pride
+  26   CONVERGED       0.8°  anger → interest → anger → happy → happy → happy → happy
+  27   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  28      FAILED      78.5°  anger → interest → interest → interest → interest → interest → anger
+  29      FAILED      19.6°  anger → interest → happy → happy → happy → happy → happy
+  30   CONVERGED       0.8°  anger → interest → interest → happy → happy → happy → happy
+  31      FAILED     103.4°  anger → relief → guilt → disgust → interest → relief → relief
+  32      FAILED      65.9°  anger → interest → anger → happy → pride → happy → pride

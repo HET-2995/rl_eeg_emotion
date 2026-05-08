@@ -1,0 +1,9 @@
+Mapping of K-Means Clusters to Emotions:
+Cluster 0 -> Sadness (Centroid: Valence=-0.81, Arousal=-0.71)
+Cluster 1 -> Pride (Centroid: Valence=0.73, Arousal=0.04)
+Cluster 2 -> Interest (Centroid: Valence=-0.22, Arousal=0.71)
+Cluster 3 -> Happy (Centroid: Valence=0.73, Arousal=0.75)
+Cluster 4 -> Guilt (Centroid: Valence=-0.21, Arousal=-0.81)
+Cluster 5 -> Disgust (Centroid: Valence=-0.37, Arousal=-0.06)
+Cluster 6 -> Anger (Centroid: Valence=-0.85, Arousal=0.69)
+Cluster 7 -> Relief (Centroid: Valence=0.59, Arousal=-0.67)

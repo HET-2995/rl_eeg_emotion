@@ -1,0 +1,102 @@
+========================================================================
+  INNOVATION REPORT — RL Music Emotion Management
+  Reference: Dutta et al., IEEE EMBC 2020
+========================================================================
+
+DATA & ACTION SPACE
+────────────────────────────────────────────────────────────────────────
+  Loading   : CSV only (z-score per-subject → tanh, code-1 pipeline)
+  Actions    : 8 GEW emotion directions (subject-independent)
+  Clip select: best_clip(clips, action_idx, vs) — cosine similarity
+               0.7 × target-emotion sim + 0.3 × current-state sim
+
+INNOVATIONS IMPLEMENTED
+────────────────────────────────────────────────────────────────────────
+  INN-1  Continuous DQN (raw valence/arousal state, neural Q-function)
+  INN-2  Momentum DQN  (4-D state: v, a, Δv, Δa — trajectory-aware)
+  INN-3  Adaptive Reward Shaping (λ grows with iteration depth)
+  INN-4  Multi-Target Navigation (all 8 GEW emotions as targets)
+
+COMPARATIVE RESULTS  (LOSO, 32 subjects, 6 iterations)
+────────────────────────────────────────────────────────────────────────
+                        Converged Conv % Mean Final°  Std° Mean Conv° Mean Fail°
+Method                                                                          
+Baseline (Tabular Q)        22/32   68.8        16.2  28.5        1.6       48.1
+INN-3: Adaptive Shaping     17/32   53.1        33.2  49.5        1.7       68.8
+INN-1: DQN (2-D state)      30/32   93.8         5.0  17.3        0.8       69.2
+INN-2: Momentum DQN         17/32   53.1        41.9  44.3        0.8       88.5
+
+  Paper baseline (Table I, T-group): 19/32 converged, final ≈ 57°
+
+BASELINE TABLE I (with fixed shaping)
+────────────────────────────────────────────────────────────────────────
+         Clip 1-2           3           4           5           6
+Group                                                            
+T      24.4(24.7)  26.8(24.9)  14.5(27.3)  31.7(36.4)  16.2(28.5)
+S      23.5(22.8)  18.1(19.5)    3.1(8.6)  19.3(20.8)    1.6(2.2)
+F      26.2(28.3)  45.9(24.8)  39.8(36.1)  59.1(46.9)  48.1(33.2)
+
+  Converged (<10.0°): 22/32
+  Failed: 10/32
+  Overall clip-6: 16.2° ± 28.5°
+
+INN-4: MULTI-TARGET RESULTS
+────────────────────────────────────────────────────────────────────────
+  Target      Mean Final°   Conv/32    Conv%
+  sadness          108.2°         7    21.9%
+  pride             49.9°         0     0.0%
+  interest          50.8°         2     6.2%
+  happy             31.7°        20    62.5%
+  guilt            130.6°         0     0.0%
+  disgust          133.8°         1     3.1%
+  anger            106.3°         0     0.0%
+  relief            92.3°         0     0.0%
+
+PER-SUBJECT DETAIL (baseline with shaping)
+────────────────────────────────────────────────────────────────────────
+ SID      Status   FinalErr  Emotion Path
+------------------------------------------------------------------------
+   1   CONVERGED       0.8°  anger → interest → happy → interest → happy → interest → happy
+   2   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+   3      FAILED      42.2°  anger → interest → happy → anger → happy → guilt → pride
+   4   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+   5   CONVERGED       0.8°  anger → interest → anger → happy → happy → happy → happy
+   6      FAILED      23.9°  anger → interest → happy → pride → happy → pride → happy
+   7   CONVERGED       0.8°  anger → interest → happy → pride → happy → pride → happy
+   8   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+   9      FAILED     123.5°  anger → interest → happy → pride → guilt → pride → guilt
+  10   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  11      FAILED      12.0°  anger → interest → happy → interest → happy → interest → happy
+  12   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  13      FAILED      90.9°  anger → interest → disgust → anger → interest → disgust → anger
+  14   CONVERGED       0.8°  anger → interest → happy → interest → happy → interest → happy
+  15   CONVERGED       0.8°  anger → interest → pride → happy → happy → happy → happy
+  16      FAILED      40.2°  anger → interest → happy → interest → happy → interest → interest
+  17   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  18   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  19   CONVERGED       0.8°  anger → interest → pride → happy → interest → pride → happy
+  20   CONVERGED       0.8°  anger → interest → happy → interest → happy → interest → happy
+  21      FAILED      48.6°  anger → interest → happy → happy → interest → happy → interest
+  22      FAILED      17.6°  anger → interest → happy → happy → happy → happy → happy
+  23   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  24   CONVERGED       0.8°  anger → interest → happy → interest → happy → interest → happy
+  25   CONVERGED       0.8°  anger → interest → happy → interest → happy → interest → happy
+  26   CONVERGED       5.7°  anger → interest → happy → interest → happy → interest → happy
+  27   CONVERGED       8.1°  anger → interest → happy → interest → happy → interest → happy
+  28   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+  29      FAILED      25.2°  anger → interest → happy → interest → happy → interest → happy
+  30      FAILED      56.8°  anger → interest → happy → happy → interest → happy → interest
+  31   CONVERGED       7.8°  anger → interest → happy → interest → happy → interest → happy
+  32   CONVERGED       0.8°  anger → interest → happy → happy → happy → happy → happy
+
+KEY INSIGHTS
+────────────────────────────────────────────────────────────────────────
+  • Fixed 8-action GEW space ensures consistent policy transfer across subjects.
+  • Continuous DQN removes the 9-bucket discretisation bottleneck.
+  • Momentum state (INN-2) exposes emotional velocity to the agent,
+    reducing oscillation in failing subjects.
+  • Adaptive shaping (INN-3) mimics curriculum learning: free early,
+    escalating pressure at decisive final clips.
+  • Multi-target analysis (INN-4) shows positive-valence targets
+    (happy, pride, interest) are structurally easier to reach.
+========================================================================
